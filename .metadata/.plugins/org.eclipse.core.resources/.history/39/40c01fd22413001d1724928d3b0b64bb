@@ -1,0 +1,115 @@
+package com.example.demo.demoServiceImplementation;
+
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.DemoEntity.CourseEntity;
+import com.example.demo.DemoEntity.DepartmentEntity;
+import com.example.demo.DemoEntity.TeacherEntity;
+import com.example.demo.demoRepo.CourseEntityRepo;
+import com.example.demo.demoRepo.DepartmentEntityRepo;
+import com.example.demo.demoRepo.TeacherEntityRepo;
+import com.example.demo.demoService.DepartmentService;
+import com.example.demo.request.CourseRequest;
+import com.example.demo.request.DepartmentRequest;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import org.springframework.transaction.annotation.Transactional;
+
+
+
+
+
+@Service
+public class DepartmentServiceImplementation implements DepartmentService {
+	@Autowired
+	DepartmentEntityRepo departmentEntityRepo;
+	@Autowired
+	CourseEntityRepo courseEntityRepo;
+	
+	@Autowired
+	 TeacherEntityRepo teacherEntityRepo;
+	public ResponseEntity<Object> AddDepartment(DepartmentRequest departmentRequest) {
+		
+		try {
+			   ModelMapper modelMapper=new ModelMapper();
+			   modelMapper.getConfiguration()
+			   .setMatchingStrategy(MatchingStrategies.STRICT);
+//				 department=new DepartmentEntity();
+			   DepartmentEntity	department=modelMapper.map(departmentRequest,DepartmentEntity.class);
+			   departmentEntityRepo.save(department);	
+				return new ResponseEntity<Object>("Department Added Successfully",HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<Object>(e.getMessage(),HttpStatus.NOT_FOUND);
+		}
+}
+	
+	
+	
+
+	
+	
+	public  DepartmentEntity returnDeparmentObj(DepartmentRequest request) {
+		
+		DepartmentEntity department=new DepartmentEntity();
+		
+		department.setName(request.getName());
+		department.setDescription(request.getDescription());
+		
+		List<CourseEntity>coursesList=new ArrayList<>();
+		
+		
+		for (CourseRequest course : request.getCourseEntity()) {
+			
+			CourseEntity obj=new CourseEntity();
+			obj.setCourse_name(course.getCourse_name());
+			
+			;
+			coursesList.add( courseEntityRepo.save(obj));
+			
+		}
+		department.setCourseEntity(coursesList);
+		
+		
+		return department;
+		
+		
+	}
+
+
+
+
+
+
+	
+	
+	
+	
+	
+//	public ResponseEntity<DepartmentRequest> getDepartment(int id){
+//		if(departmentEntityRepo.findById(id)!=null) {
+//			return new ResponseEntity<DepartmentRequest>(HttpStatus.OK);
+//		}
+//		return new ResponseEntity<DepartmentRequest>("Department Not found With this id",HttpStatus.NOT_FOUND);
+//	}
+	
+//	private DepartmentRequest convertEntityToDto(DepartmentEntity departmentEntity){
+//        DepartmentRequest departmentRequestdto = new DepartmentRequest();
+//        departmentRequestdto.setName(departmentEntity.getName());
+//        departmentRequestdto.setDescription(departmentEntity.getDescription());
+//        departmentRequestdto.setCourseRequests(departmentEntity.getCourseEntity());
+//        return userLocationDTO;
+//    }
+	
+	
+	
+	}

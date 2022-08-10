@@ -1,0 +1,40 @@
+package com.example.demo.demoController;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.DemoEntity.CourseEntity;
+import com.example.demo.demoRepo.CourseEntityRepo;
+import com.example.demo.demoService.CourseService;
+import com.example.demo.request.CourseRequest;
+
+@RestController
+public class CourseController {
+	@Autowired
+	private CourseService courseService;
+	@Autowired
+	private CourseEntityRepo courseEntityRepo;
+	
+	@PostMapping("/AddCourse")
+	 public ResponseEntity<Object> AddCourse(
+		       @RequestBody CourseRequest courseRequest)
+		    {
+		courseService.AddCourse(courseRequest);
+		         return new ResponseEntity<Object>("Course Added Successfully",HttpStatus.OK);
+		    }
+	
+	@GetMapping("/getCourse")
+	public Optional<CourseEntity> getCourse() {
+		return courseEntityRepo.findById(1);
+		
+	}
+
+}

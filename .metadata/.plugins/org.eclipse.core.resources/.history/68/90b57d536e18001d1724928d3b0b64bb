@@ -1,0 +1,34 @@
+package com.example.demo.demoServiceImplementation;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.DemoEntity.DepartmentEntity;
+import com.example.demo.DemoEntity.TeacherEntity;
+import com.example.demo.demoRepo.TeacherEntityRepo;
+import com.example.demo.demoService.TeacherService;
+import com.example.demo.request.TeacherRequest;
+
+@Service
+public class TeacherServiceImplementation implements TeacherService {
+	
+	@Autowired
+	TeacherEntityRepo teacherEntityRepo;
+	
+	public void AddTeacher(TeacherRequest teacherRequest) {
+		try {
+			ModelMapper modelMapper=new ModelMapper();
+			TeacherEntity teacherEntity=new TeacherEntity();
+			teacherEntity=modelMapper.map(teacherRequest,TeacherEntity.class);
+			teacherEntityRepo.save(teacherEntity);	
+			return new ResponseEntity<Object>("Teacher Added Successfully",HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<Object>(e.getMessage(),HttpStatus.NOT_FOUND);
+		}
+	}
+	
+
+}

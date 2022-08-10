@@ -1,0 +1,13 @@
+package com.example.demo.demoService;
+
+import org.springframework.http.ResponseEntity;
+
+import com.example.demo.DemoEntity.StudentEntity;
+import com.example.demo.request.StudentRequest;
+
+public interface StudentService {
+	
+	public StudentEntity AddStudent(StudentRequest studentRequest);
+	public StudentEntity getStudent(int id);
+	public StudentEntity updateStudent(int id,StudentEntity studentEntity);
+}

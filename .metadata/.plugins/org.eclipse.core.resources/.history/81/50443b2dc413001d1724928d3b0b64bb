@@ -1,0 +1,36 @@
+package com.example.demo.demoController;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.DemoEntity.StudentEntity;
+import com.example.demo.demoRepo.StudentEntityRepo;
+import com.example.demo.demoService.StudentService;
+import com.example.demo.request.StudentRequest;
+@RestController
+public class StudentController {
+	@Autowired
+	StudentService studentService;
+	
+	@Autowired
+	StudentEntityRepo studentEntityRepo;
+	
+	@PostMapping("/AddStudent")
+    public void addStudent(
+       @RequestBody StudentRequest studentRequest)
+    {
+         studentService.AddStudent(studentRequest);
+    }
+	
+	@GetMapping("/getStudent")
+	public Optional<StudentEntity> getStudent() {
+		return studentEntityRepo.findById(1);
+		
+	}
+
+}

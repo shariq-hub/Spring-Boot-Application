@@ -1,0 +1,17 @@
+package com.example.demo.request;
+
+import com.example.demo.DemoEntity.DepartmentEntity;
+
+import lombok.Data;
+@Data
+public class StudentRequest {
+	
+	private int id;
+	private int roll_no;
+	private String name;
+	private String email;
+	private Integer department_id;
+	//private DepartmentEntity department_entity;
+	
+
+}

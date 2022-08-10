@@ -1,0 +1,12 @@
+package com.example.demo.demoService;
+
+import org.springframework.http.ResponseEntity;
+
+import com.example.demo.DemoEntity.CourseEntity;
+import com.example.demo.request.CourseRequest;
+
+public interface CourseService {
+	
+	public Void AddCourse(CourseRequest courseRequest);
+
+}

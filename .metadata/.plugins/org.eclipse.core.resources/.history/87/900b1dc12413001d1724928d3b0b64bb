@@ -1,0 +1,17 @@
+package com.example.demo.demoService;
+
+
+import javax.transaction.Transactional;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.request.DepartmentRequest;
+
+public interface DepartmentService {
+
+	public ResponseEntity<Object> AddDepartment(DepartmentRequest departmentRequest);
+	//public ResponseEntity<DepartmentRequest> getDepartment(int id);
+	public DepartmentEntity returnDeparmentObj();
+
+}

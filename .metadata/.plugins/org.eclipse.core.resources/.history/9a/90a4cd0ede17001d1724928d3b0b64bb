@@ -1,0 +1,29 @@
+package com.example.demo.demoServiceImplementation;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.DemoEntity.CourseEntity;
+import com.example.demo.demoRepo.CourseEntityRepo;
+import com.example.demo.demoService.CourseService;
+import com.example.demo.request.CourseRequest;
+
+@Service
+public class CourseServiceImplementation implements CourseService {
+	@Autowired
+	CourseEntityRepo courseEntityRepo;
+	
+    public void AddCourse(CourseRequest courseRequest) {
+			ModelMapper modelMapper=new ModelMapper();
+			CourseEntity courseEntity=new CourseEntity();
+			courseEntity=modelMapper.map(courseRequest,CourseEntity.class);
+			courseEntityRepo.save(courseEntity);	
+		
+}
+
+	
+
+}

@@ -1,0 +1,63 @@
+package com.example.demo.demoServiceImplementation;
+
+import java.util.Optional;
+
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.DemoEntity.DepartmentEntity;
+import com.example.demo.DemoEntity.StudentEntity;
+import com.example.demo.DemoEntity.TeacherEntity;
+import com.example.demo.demoRepo.DepartmentEntityRepo;
+import com.example.demo.demoRepo.StudentEntityRepo;
+import com.example.demo.demoService.StudentService;
+import com.example.demo.request.DepartmentRequest;
+import com.example.demo.request.StudentRequest;
+import com.example.demo.request.TeacherRequest;
+
+@Service
+public class StudentServiceImplementation implements StudentService {
+	@Autowired
+	StudentEntityRepo studentEntityRepo;
+	@Autowired
+	DepartmentEntityRepo departmentEntityRepo;
+	
+	
+	public StudentEntity AddStudent(StudentRequest studentRequest) {
+		   ModelMapper modelMapper=new ModelMapper();
+		   modelMapper.getConfiguration()
+		   .setMatchingStrategy(MatchingStrategies.STANDARD);
+		    DepartmentEntity departmentEntity=departmentEntityRepo.findById(studentRequest.getDepartment_id()).get(); // Get the Department
+			StudentEntity studentEntity=modelMapper.map(studentRequest,StudentEntity.class); // map the Entity with Request& Convert the request to entity
+			studentEntity.setDepartment_entity(departmentEntity); 
+			studentEntityRepo.save(studentEntity);
+			return studentEntity;
+			}
+	
+	public StudentEntity getStudent(int id){
+		StudentEntity studentEntity=new StudentEntity();
+		studentEntity=studentEntityRepo.findById(id).get();
+		return studentEntity;		
+	}
+	
+	public StudentEntity updateStudent(int id,StudentRequest studentEntity) {
+		StudentEntity studentEntity2=new StudentEntity();
+		studentEntity2=studentEntityRepo.findById(id).get();
+		studentEntity2.setDepartment_entity(studentEntity.getDepartment_entity());
+		studentEntity2.setEmail(studentEntity.getEmail());
+		studentEntity2.setName(studentEntity.getName());
+		studentEntity2.setRoll_no(studentEntity.getRoll_no());	
+		return studentEntity2;
+		
+	}
+	
+	
+	
+		}
+
+	
+

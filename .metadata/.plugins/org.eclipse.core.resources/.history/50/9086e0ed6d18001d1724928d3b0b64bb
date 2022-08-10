@@ -1,0 +1,13 @@
+package com.example.demo.demoService;
+
+import org.springframework.http.ResponseEntity;
+
+import com.example.demo.DemoEntity.TeacherEntity;
+import com.example.demo.request.TeacherRequest;
+
+public interface TeacherService {
+	
+	public void AddTeacher(TeacherRequest teacherRequest);
+	public 
+
+}
